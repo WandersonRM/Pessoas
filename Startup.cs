@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
+using System;
 
 namespace Pessoas
 {
@@ -36,12 +37,21 @@ namespace Pessoas
             string conexaoBD = "AI1sFiayytywNPZu3oAyxKlDoSHOf5IjSuplKImu0DiS8UE7vl8t3AMtW6lrIT627n2yCn1uh7okj6EuUQCSYc+2EhzbevqFwyew1ezwnUzwlPobPlQB4K/GFeeM9wsNF6mNtwZT/hAd4DA3g20ezOSW0WffY9EelNymUvs0m/G/ShbOSa5/1fuGU2fy2MxTsFJVrpRfvJROrpH+TJkybmu350xNp29FdAKB/9ozHRM=";
             var builder = new SqlConnectionStringBuilder(SecurityController.Decrypt(conexaoBD, _env));
             */
-            var builder = new SqlConnectionStringBuilder(Configuration["App:ConnectionString"]);
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer( builder.ConnectionString ));
-            
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            if(_env == "Development") {
+                var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(Configuration["App:ConnectionString"]);
+
+                services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(builder.ConnectionString));
+            }
+            else if(_env == "Production")
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                      options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStringPessoas", EnvironmentVariableTarget.Machine)));
+            }
+
+
+             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
          
@@ -62,6 +72,10 @@ namespace Pessoas
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+            }
+            else if(env.IsProduction() )
+            {
+                app.UseExceptionHandler("/Error");
             }
             else
             {

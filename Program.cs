@@ -28,6 +28,7 @@ namespace Pessoas
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).ConfigureAppConfiguration(configurationBuilder => { configurationBuilder.AddEnvironmentVariables(); }) // aqui é onde você adiciona outror `EnvironmentVariablesConfigurationSource`
+            ;
     }
 }
