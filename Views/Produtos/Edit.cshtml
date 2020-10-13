@@ -1,0 +1,178 @@
+﻿@model Pessoas.ViewModels.ImagensProdutoViewModel.ListaImagensProduto
+
+@{
+    ViewData["Title"] = "Editar produto";
+}
+
+<h3><a href="/Produtos/Index">Produtos</a> > <a href="/Produtos/@Model.Produto.ProdutoId/Details">@Model.Produto.nome</a> > Editar</h3>
+
+<hr />
+<style>
+    /*.dz-default {
+        padding-top: 28px;
+        padding-bottom: 28px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: #039be5;
+    }*/
+
+    .dz-image-preview {
+        border-width: 1px;
+        border-style: dashed;
+        border-color: #039be5;
+    }
+</style>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="border-top-width: 1px; border-left-width: 1px; border-bottom-width: 1px; border-right-width: 1px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Produto.ProdutoId" />
+            <div class="form-group">
+                <label asp-for="@Model.Produto.CodigoBarra" class="control-label">Código de Barra</label>
+                <input asp-for="@Model.Produto.CodigoBarra" class="form-control" />
+                <span asp-validation-for="@Model.Produto.CodigoBarra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Produto.nome" class="control-label">Nome</label>
+                <input asp-for="@Model.Produto.nome" class="form-control" />
+                <span asp-validation-for="@Model.Produto.nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Produto.DescricaoDetalhada" class="control-label">Descrição Detalhada</label>
+                <textarea asp-for="@Model.Produto.DescricaoDetalhada" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Produto.DescricaoDetalhada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Produto.Estoque" class="control-label">Estoque</label>
+                <input asp-for="@Model.Produto.Estoque" class="form-control" />
+                <span asp-validation-for="@Model.Produto.Estoque" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Produto.Preco" class="control-label">Preço (R$)</label>
+                <input asp-for="@Model.Produto.Preco" class="form-control" />
+                <span asp-validation-for="@Model.Produto.Preco" class="text-danger"></span>
+            </div>
+            <div>
+                <button id="teste" type="button" class="btn btn-outline-primary">Adicionar Imagens</button>
+            </div>
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+            
+            <br />
+        </form>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" id="submit" />
+        </div>
+        <div>
+            <a asp-action="Index">Voltar para lista</a>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-1"></div>
+</div>
+
+
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.dz-default').hide();
+            $('.dz-button').hide();
+        });
+        function myParamName() {
+            var files = "files";
+            return  files;
+        }
+        Dropzone.options.dropzoneForm = {
+            autoProcessQueue: false,
+            clickable: "#teste",
+            paramName: myParamName, // The name that will be used to transfer the file
+            addRemoveLinks: true,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            dictDefaultMessage: 'Solte os arquivos aqui para fazer o upload',
+            dictRemoveFile: "Remover arquivo",
+            dictMaxFilesExceeded: "Você não pode enviar mais arquivos.",
+            dictCancelUploadConfirmation: "Tem certeza que deseja cancelar este upload?",
+            dictFileTooBig: "Arquivo muito grande ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+            dictFallbackText: "Use o formulário substituto abaixo para fazer upload de seus arquivos como antigamente.",
+            dictFallbackMessage: "Seu navegador não suporta uploads de arquivos arrastar e soltar.",
+            dictInvalidFileType: "Você não pode fazer upload de arquivos deste tipo.",
+            dictCancelUpload: "Cancelar upload",
+            dictUploadCanceled: "Upload cancelado.",
+            acceptedFiles: ".png,.jpg,.gif,.jpeg",
+
+            init: function () {
+
+                var wrapperThis = this;
+                $.ajax({
+                    url: '/Produtos/@Model.Produto.ProdutoId/ListagemImagens',
+                    dataType: 'json',
+                    success: function (response) {
+                        $.each(response.data, function (index, item) {
+                            console.log(item);
+                           var mockFile = {
+                                    name: item.attachmentID,
+                                    size: 12345
+                           };
+                           wrapperThis.displayExistingFile(mockFile, item.path);
+                        });
+                    }
+                });
+
+
+                $("#submit").click(function (e) {
+                        console.log($(this));
+                        e.preventDefault();
+                        wrapperThis.processQueue();
+                        var r = confirm("Alterado com sucesso!");
+                        if (r == true) {
+                            window.location.href = "https://localhost:5001/Produtos/Index";
+                        }
+                        else {
+
+                        }
+                    });
+            },
+            accept: function (file, done) {
+                done();
+            },
+            removedfile: function (file) {
+                var imagemId = file.name;
+                
+                var r = confirm("Deseja remover PERMANENTEMENTE a imagem?");
+                if (r == true) {
+                    if (+imagemId) {
+                        $.ajax({
+                            url: '/Produtos/' + imagemId + '/DeletarImagem',
+                            type: 'delete',
+                            dataType: 'json',
+                            success: function (response) {
+                                //var r = confirm("Arquivo removido com sucesso!");
+                            }
+                        });
+                        var _ref;
+                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                        //var r = confirm("Arquivo removido com sucesso!");
+                    } else {
+                        var _ref;
+                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                    }
+                }
+                else {
+
+                }
+            }
+            
+        };
+    </script>
+
+}

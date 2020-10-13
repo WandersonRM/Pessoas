@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Pessoas.Models.Produto>
+
+@{
+    ViewData["Title"] = "Listagem de Produtos";
+}
+
+<h1>Produtos</h1>
+
+<p>
+    <a asp-action="Create">Adicionar Produto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Código de Barra
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Descrição Detalhada
+            </th>
+            <th>
+                Estoque
+            </th>
+            <th>
+                Preço (R$)
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoBarra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescricaoDetalhada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estoque)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-produtoId="@item.ProdutoId">Editar</a> |
+                    <a asp-action="AdicionarImagens" asp-route-id="@item.ProdutoId">Imagens</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProdutoId">Deletar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    <!--ESTE É UM EASTER EGG DEIXADO POR WESLEY ^^ -->>
+</table>

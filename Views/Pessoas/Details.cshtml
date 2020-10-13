@@ -1,0 +1,122 @@
+﻿@model Pessoas.ViewModels.PessoaListViewModel.PessoaEnderecos
+
+
+<div>
+    <h3><a href="/Pessoas/Index">Pessoa</a> > >  <a href="/Pessoas/ @Model.Pessoa.Id/Pedidos/Index">@Model.Pessoa.Nome</a> > Endereços</h3>
+    <hr />
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pessoa.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Sexo
+        </dt>
+        <dt class="col-sm-10">
+
+
+            @if (Model.Pessoa.Sexo == 1)
+            {
+                <label>Masculino</label>
+            }
+            else
+             if (Model.Pessoa.Sexo == 2)
+            {
+                <label>Feminino</label>
+            }
+            else
+             if (Model.Pessoa.Sexo == 3)
+            {
+                <label>Outros</label>
+            }
+        </dt>
+
+        <div>
+            <a class="btn btn-warning" asp-action="Edit" asp-controller="Pessoas" asp-route-id="@Model.Pessoa.Id">Editar</a> |
+            <a class="btn btn-primary" asp-action="Index">voltar para lista</a> |
+            <a class="btn btn-info" asp-action="Pedidos" asp-controller="Pessoas" asp-route-id="@Model.Pessoa.Id">Pedidos</a> |
+        </div>
+
+    </dl>
+</div>
+
+
+<h2>Lista de Endereços</h2>
+
+<p>
+    <a asp-controller="Enderecos" asp-action="Create" asp-route-id="@Model.Pessoa.Id">Adicionar Endereço</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                Rua
+            </th>
+            <th>
+                Numero
+            </th>
+            <th>
+                Complemento
+            </th>
+            <th>
+               Bairro
+            </th>
+            <th>
+               Cidade
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @*@foreach (var item in (List<Enderecos>)@Model.Enderecos)*@
+        @for (int i = 0; i < Model.Enderecos.Count; i++) {
+            
+           @Html.HiddenFor(m => Model.Enderecos[i].Rua)
+        <tr>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Rua)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Numero)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Complemento)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Bairro)
+               
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Cidade)
+               
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Enderecos[i].Estado)
+                
+            </td>
+            <td>
+                <a asp-controller="Enderecos" asp-action="Edit" asp-route-id="@Model.Enderecos[i].EnderecoId">Editar</a> |
+                <a asp-controller="Enderecos" asp-action="Details" asp-route-id="@Model.Enderecos[i].EnderecoId">Detalhes</a> |
+                <a asp-controller="Enderecos" asp-action="Delete" asp-route-id="@Model.Enderecos[i].EnderecoId">Deletar</a>
+            </td>
+            
+        </tr>
+
+        }
+    </tbody>
+</table>

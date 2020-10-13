@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Pessoas.Models.Pessoa>
+
+@{
+    ViewData["Title"] = "Listagem de Pessoas";
+}
+
+<h1>Pessoas</h1>
+
+<p>
+    <a asp-action="Create">Adicionar pessoa</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @if (item.Sexo == 1)
+                {
+                    <label>Masculino</label>
+                }
+                else
+             if (item.Sexo == 2)
+                {
+                    <label>Feminino</label>
+                }
+                else
+             if (item.Sexo == 3)
+                {
+                    <label>Outros</label>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,150 @@
+﻿@model Pessoas.ViewModels.PessoaListViewModel.PessoaPedidos
+
+
+<div>
+    <h3><a href="/Pessoas/Index">Pessoa</a> > >  <a href="/Pessoas/ @Model.Pessoa.Id/Enderecos/Index">@Model.Pessoa.Nome</a> > Pedidos</h3>
+    <hr />
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pessoa.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Sexo
+        </dt>
+        <dt class="col-sm-10">
+
+
+            @if (Model.Pessoa.Sexo == 1)
+            {
+                <label>Masculino</label>
+            }
+            else if (Model.Pessoa.Sexo == 2)
+            {
+                <label>Feminino</label>
+            }
+            else if (Model.Pessoa.Sexo == 3)
+            {
+                <label>Outros</label>
+            }
+        </dt>
+
+        <div>
+            <a class="btn btn-warning" asp-action="Edit" asp-controller="Pessoas" asp-route-id="@Model.Pessoa.Id">Editar</a> |
+            <a class="btn btn-primary" asp-action="Index">Voltar para a lista</a>|
+            <a class="btn btn-info" asp-action="Details" asp-controller="Pessoas" asp-route-id="@Model.Pessoa.Id">Endereços</a>
+        </div>
+
+    </dl>
+</div>
+
+
+<h2>Lista de Pedidos</h2>
+
+<p>
+    <a asp-controller="Pessoas" asp-action="CriarPedido"  asp-route-pessoaId="@Model.Pessoa.Id">Adicionar pedidos</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                #
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Rua
+            </th>
+            <th>
+                Número
+            </th>
+            <th>
+                Complemento
+            </th>
+            <th>
+                Bairro
+            </th>
+            <th>
+                Cidade
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @*@foreach (var item in (List<Enderecos>)@Model.Enderecos)*@
+        @for (int i = 0; i < Model.Pedidos.Count; i++)
+        {
+
+            @*@*Html.HiddenFor(m => Model.Pedidos[i].Rua)*@
+        <tr>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].PedidoId)
+                @*@Html.DisplayFor(modelItem => item.Rua)*@
+            </td>
+
+            <td>
+                @*@Html.DisplayFor(m => Model.Pedidos[i].PedidoId)*@
+                @if (Model.Pedidos[i].PedidoId == 1)
+                {
+                    <label>Feito</label>
+                }
+                else
+              if (Model.Pedidos[i].PedidoId == 2)
+                {
+                    <label>Enviado</label>
+                }
+                else
+              if (Model.Pedidos[i].PedidoId == 3)
+                {
+                    <label>Entregue</label>
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Rua)
+                @*@Html.DisplayFor(modelItem => item.Rua)*@
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Numero)
+                @*@Html.DisplayFor(modelItem => item.Numero)*@
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Complemento)
+                @*@Html.DisplayFor(modelItem => item.Complemento)*@
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Bairro)
+                @*@Html.DisplayFor(modelItem => item.Bairro)*@
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Cidade)
+                @*@Html.DisplayFor(modelItem => item.Cidade)*@
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.Pedidos[i].Estado)
+                @*@Html.DisplayFor(modelItem => item.Estado)*@
+            </td>
+            <td>
+                <a asp-controller="Pessoas" asp-action="EditarPedido" asp-route-pessoaId="@Model.Pessoa.Id"  asp-route-pedidoId="@Model.Pedidos[i].PedidoId">Editar</a> |
+                <a asp-controller="Pessoas" asp-action="DetalhesPedido" asp-route-pessoaId="@Model.Pessoa.Id"  asp-route-pedidoId="@Model.Pedidos[i].PedidoId">Detalhes</a> |
+                <a asp-controller="Pessoas" asp-action="DeletarPedido" asp-route-pessoaId="@Model.Pessoa.Id" asp-route-pedidoId="@Model.Pedidos[i].PedidoId">Deletar</a>
+            </td>
+
+        </tr>
+
+        }
+    </tbody>
+</table>

@@ -1,0 +1,139 @@
+﻿@model Pessoas.ViewModels.ItensPedidoViewModel.ItensPedido.Adicionaritens
+
+@{
+    ViewData["Title"] = "Detalhes do pedido";
+}
+
+<!--<h1>Detalhes do Pedido</h1>-->
+<h3><a href="/Pedidos/Index">Pedido</a> > @Model.Pedido.PedidoId</h3>
+<hr />
+<div>
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            Pessoa
+        </dt>
+        <dd class="col-sm-10">
+
+            @Model.Pedido.PessoaId
+        </dd>
+        <dt class="col-sm-2">
+            Rua
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Rua
+        </dd>
+        <dt class="col-sm-2">
+            Numero
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Numero
+        </dd>
+        <dt class="col-sm-2">
+            Complemento
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Complemento
+        </dd>
+        <dt class="col-sm-2">
+            Bairro
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Bairro
+        </dd>
+        <dt class="col-sm-2">
+            Cidade
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Cidade
+        </dd>
+        <dt class="col-sm-2">
+            Estado
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Estado
+        </dd>
+        <dt class="col-sm-2">
+            Status
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.Status
+        </dd>
+        <dt class="col-sm-2">
+            Data/Hora
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Pedido.PedidoEnviado
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Pedido.PedidoId">Edit</a> |
+    <a asp-action="Index">Voltar para a lista</a>
+</div>
+
+
+<h1>Itens do Pedido</h1>
+
+<p>
+    <a asp-action="Create">Adicionar itens ao pedido</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Quantidade
+            </th>
+            <th>
+                Valor Unitario
+            </th>
+            <th>
+                Valor Total
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.ItensdoPedido.Count; i++)
+        {
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(m => Model.ItensdoPedido[i].Descricao)
+
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => Model.ItensdoPedido[i].Quantidade)
+
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => Model.ItensdoPedido[i].ValorUnitario)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => Model.ItensdoPedido[i].ValorTotal)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => Model.ItensdoPedido[i].ProdutoId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Model.ItensdoPedido[i].ItenPedidoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@Model.ItensdoPedido[i].ItenPedidoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.ItensdoPedido[i].ItenPedidoId">Deletar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

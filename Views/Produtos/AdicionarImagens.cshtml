@@ -1,0 +1,102 @@
+﻿@model Pessoas.ViewModels.ImagensProdutoViewModel.ListaImagensProduto
+
+@{
+    ViewData["Title"] = "Adicionar Imagens ao produto";
+}
+<h3><a href="/Produtos/Index">Produtos</a> > <a href="/Produtos/@Model.Produto.ProdutoId/Details">@Model.Produto.nome</a> > Imagens do Produto</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-1">
+
+
+    </div>
+    <div class="col-md-10">
+        <Strong>Adicione as imagens aqui</Strong>
+        <form action="~/Produtos/UploadFile" method="post"
+              enctype="multipart/form-data" class="dropzone"
+              id="dropzoneForm">
+
+            <input name="produtoId" type="hidden" value="@Model.Produto.ProdutoId" />
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+        </form>
+        <br />
+        <div align="center">
+            <button type="submit" class="btn btn-info" id="submit"><i class="fa fa-floppy-o"></i>Upload</button>
+        </div>
+
+        <div class="panel panel-default">
+            <br />
+            <Strong>Lista de imagens do produto</Strong>
+            <div class="row">
+                @for (int i = 0; i < Model.ImagensProduto.Count; i++)
+                {
+                    <div class="card" style="width: 18rem;margin-bottom: 20px;margin-right: 20px;margin-left: 20px;border-top-width: 0px;margin-top: 20px;">
+                        <div class="card-body">
+                            <img src="@Model.ImagensProduto[i].ImagemUrl" class="card-img-top" style="width: 200px;">
+                            <div class="card-body">
+                                <form asp-action="DeletarImagem" align="center">
+
+                                    <input name="imagemId" type="hidden" value="@Model.ImagensProduto[i].ImagemProdutoId" />
+                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function myParamName() {
+            var files = "files";
+            var produtoId = @Model.Produto.ProdutoId;
+            return produtoId, files;
+        }
+        Dropzone.options.dropzoneForm = {
+               autoProcessQueue: false,
+            paramName: myParamName, // The name that will be used to transfer the file
+            addRemoveLinks: true,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            acceptedFiles: ".png,.jpg,.gif,.jpeg",
+            init: function () {
+                console.log("active");
+                var wrapperThis = this;
+
+                $("#submit").click(function (e) {
+                    //var produtoId =  Model.Produto.ProdutoId;
+                    //var files = "files";
+                    //alert(produtoId + files);
+                    console.log($(this));
+                    e.preventDefault();
+                    wrapperThis.processQueue();
+                });
+            },
+            accept: function (file, done) {
+                done();
+            },
+            removedfile: function (file) {
+                var _ref;
+                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+            }
+        };
+        $.getJSON('/Produtos/ListagemImagens', function (data) {
+            $.each(data, function (index, val) {
+                var mockFile = { name: val.name, size: val.size };
+                thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+                thisDropzone.options.thumbnail.call(thisDropzone, mockFile, "/Produtos/UploadFile" + val.name);
+            });
+        });
+    </script>
+}

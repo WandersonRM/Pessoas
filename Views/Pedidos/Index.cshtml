@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Pessoas.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Listagem dos pedidos";
+}
+
+<h1>Pedidos</h1>
+
+<p>
+    <a asp-action="Create">Adicionar pedido</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Pessoa
+            </th>
+            <th>
+                Rua
+            </th>
+            <th>
+                Número
+            </th>
+            <th>
+                Complemento
+            </th>
+            <th>
+                Bairro
+            </th>
+            <th>
+               Cidade
+            </th>
+            <th>
+               Estado
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+               Data/Hora
+            </th>
+            <th> Ações </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rua)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complemento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Status)*@
+                @if (item.Status == 1)
+                {
+                    <label>Feito</label>
+                }
+                else
+              if (item.Status == 2)
+                {
+                    <label>Enviado</label>
+                }
+                else
+              if (item.Status == 3)
+                {
+                    <label>Entregue</label>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PedidoEnviado)
+            </td>
+            <td>
+                @if (item.Status == 1)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.PedidoId">Editar</a> 
+                 }
+                else
+                {
+
+                }
+                <a asp-action="Details" asp-route-id="@item.PedidoId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.PedidoId">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

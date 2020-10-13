@@ -1,0 +1,68 @@
+﻿@model Pessoas.ViewModels.ImagensProdutoViewModel.ListaImagensProduto
+
+@{
+    ViewData["Title"] = "Detalhes do produto";
+}
+
+<style>
+</style>
+
+<h3><a href="/Produtos/Index">Produtos</a> > @Model.Produto.nome</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Código de Barra
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Produto.CodigoBarra
+        </dd>
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Produto.nome
+        </dd>
+        <dt class="col-sm-2">
+            Descrição Detalhada
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Produto.DescricaoDetalhada
+        </dd>
+        <dt class="col-sm-2">
+            Estoque
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Produto.Estoque
+        </dd>
+        <dt class="col-sm-2">
+            Preço (R$)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Produto.Preco
+        </dd>
+    </dl>
+</div>
+<div>
+    <a href="/Produtos/@Model.Produto.ProdutoId/Edit">Editar</a> |
+    <a href="/Produtos/@Model.Produto.ProdutoId/Images">Adicionar Imagens</a>
+</div>
+
+
+<br />
+<div class="panel panel-default">
+
+    <Strong>Lista de imagens do produto</Strong>
+    <div class="row">
+        @for (int i = 0; i < Model.ImagensProduto.Count; i++)
+        {
+        <div class="card" style="width: 18rem;margin-bottom: 20px;margin-right: 20px;margin-left: 20px;border-top-width: 0px;margin-top: 20px;">
+            <img src="@Model.ImagensProduto[i].ImagemUrl" class="card-img-top">
+        </div>
+        }
+    </div>
+</div>
+
+   
+
