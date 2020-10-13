@@ -10,6 +10,7 @@ using Pessoas.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 
 namespace Pessoas
 {
@@ -36,11 +37,15 @@ namespace Pessoas
             var builder = new SqlConnectionStringBuilder(SecurityController.Decrypt(conexaoBD, _env));
             */
             var builder = new SqlConnectionStringBuilder(Configuration["App:ConnectionString"]);
+
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer( builder.ConnectionString ));
             
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+         
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
