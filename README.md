@@ -28,7 +28,7 @@ Figura 6<br />
 ![06](https://user-images.githubusercontent.com/72811894/96017556-84854180-0e20-11eb-9ba6-e47dc6ac9c88.png)<br />
 
 -Aqui está um exemplo de _StringConnection_: 
-“Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True”
+```“Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True”```<br />
 
 Observação: o Valor da propriedade Data Soucer pode ser obtido em sua máquina abrindo o Microsoft SQL Server Management Studio 18, como na Figura 7.<br />
 Figura 7<br />
@@ -38,21 +38,21 @@ Figura 7<br />
 
 **Como implementar:** Abra o Console do gerenciador de pacotes (Figura 5). E execute as seguintes instruções:<br />
 ```dotnet user-secrets init```<br />
--	Logo depois digite o comando para criando uma chave. Este comando define a App:ConnectionString chave para o valor especificado.
-dotnet user-secrets set "App:ConnectionString" "Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True "
+-	Logo depois digite o comando para criando uma chave. Este comando define a App:ConnectionString chave para o valor especificado.<br />
+```dotnet user-secrets set "App:ConnectionString" "Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True "```<br />
 -	No caso esse comando irá ter a sua conectionString dentro dela com o nome do banco de dados que você irá definir conforme explicado na seção 3 Configuração do Banco de dados. 
 -	Comando para listar as chaves guardadas, caso queira ver se chave foi registrada.<br />
 ```dotnet user-secrets list```<br />
 -	Deletar uma chave caso precise.<br />
 ``` dotnet user-secrets remove "App:ConnectionString"```<br />
 ## 3.	Configuração do Banco de dados
-Agora vamos para parte de configuração do banco de dados, para isso acesse o menu superior do Visual Studio em Exibir > SQL Serve Object Explore (Clique nessa opção). Irá aparece uma janela igual a essa da Figura 8, acesse o seu banco de dados SQL serve em Database, clique com o botão direito do mouse, e clique na opção Add new Database, Escreva um nome para o banco de dados e depois atualize seu arquivo appsettings.json  na StringConnection no campo Catalog com o nome que você escolheu para o banco de dados.
+Agora vamos para parte de configuração do banco de dados, para isso acesse o menu superior do Visual Studio em Exibir > SQL Serve Object Explore (Clique nessa opção). Irá aparece uma janela igual a essa da Figura 8, acesse o seu banco de dados SQL serve em Database, clique com o botão direito do mouse, e clique na opção _Add new Database_, Escreva um nome para o banco de dados e depois atualize seu arquivo _appsettings.json_  na _StringConnection_ no campo _Catalog_ com o nome que você escolheu para o banco de dados.
 
 Figura 8<br />
 ![08](https://user-images.githubusercontent.com/72811894/96017546-818a5100-0e20-11eb-875e-de47b9c13013.png)<br />
 
 -	**Migrações:** Para rodar as migrações vá para o terminal e digite o comando:
-add-migration migracaoInicial
+```add-migration migracaoInicial```
 
 -A Figura 9 mostra como é a mensagem exibida logo pós a migração ser bem sucedida.<br />
 
