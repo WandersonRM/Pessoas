@@ -62,6 +62,6 @@ Obs.: Esse último nome fica ao seu critério normalmente uso migracao + nome da
 
 - Feito isso é só mudar de depuração de IISExpress para o com nome do seu projeto como mostrado na Figura 10 e clicar no   para executar.<br />
 Figura 10<br />
-![10](https://user-images.githubusercontent.com/72811894/96019558-0e360e80-0e23-11eb-8bf4-afdb89038524.png)
+![10](https://user-images.githubusercontent.com/72811894/96019558-0e360e80-0e23-11eb-8bf4-afdb89038524.png)<br />
 
 
