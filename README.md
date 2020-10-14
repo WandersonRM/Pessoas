@@ -37,14 +37,14 @@ Figura 7<br />
 ## 2.	Configuração do ambiente de desenvolvimento
 
 **Como implementar:** Abra o Console do gerenciador de pacotes (Figura 5). E execute as seguintes instruções:<br />
-###### dotnet user-secrets init<br />
+```dotnet user-secrets init```<br />
 -	Logo depois digite o comando para criando uma chave. Este comando define a App:ConnectionString chave para o valor especificado.
 dotnet user-secrets set "App:ConnectionString" "Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True "
 -	No caso esse comando irá ter a sua conectionString dentro dela com o nome do banco de dados que você irá definir conforme explicado na seção 3 Configuração do Banco de dados. 
 -	Comando para listar as chaves guardadas, caso queira ver se chave foi registrada.<br />
-###### dotnet user-secrets list<br />
+```dotnet user-secrets list```<br />
 -	Deletar uma chave caso precise.<br />
-###### dotnet user-secrets remove "App:ConnectionString"<br />
+``` dotnet user-secrets remove "App:ConnectionString"```<br />
 ## 3.	Configuração do Banco de dados
 Agora vamos para parte de configuração do banco de dados, para isso acesse o menu superior do Visual Studio em Exibir > SQL Serve Object Explore (Clique nessa opção). Irá aparece uma janela igual a essa da Figura 8, acesse o seu banco de dados SQL serve em Database, clique com o botão direito do mouse, e clique na opção Add new Database, Escreva um nome para o banco de dados e depois atualize seu arquivo appsettings.json  na StringConnection no campo Catalog com o nome que você escolheu para o banco de dados.
 
