@@ -1,7 +1,7 @@
 # Pessoas
 Projeto asp net core
 
-##1.	Deploy de uma aplicação Asp Net Core
+## 1.	Deploy de uma aplicação Asp Net Core
 -Aconselho a deixar uma pasta no disco principal somente com os projetos Asp Net Core, como mostrado na Figura 1.
 
 -Copie o link do repositório: Link: <https://github.com/JoaoDosDevs/Pessoas>
@@ -21,18 +21,18 @@ Projeto asp net core
 
 Observação: o Valor da propriedade Data Soucer pode ser obtido em sua máquina abrindo o Microsoft SQL Server Management Studio 18, como na Figura 7
 
-##2.	Configuração do ambiente de desenvolvimento
+## 2.	Configuração do ambiente de desenvolvimento
 
 **Como implementar:** Abra o Console do gerenciador de pacotes (Figura 5). E execute as seguintes instruções:
-######dotnet user-secrets init
+###### dotnet user-secrets init
 -	Logo depois digite o comando para criando uma chave. Este comando define a App:ConnectionString chave para o valor especificado.
 dotnet user-secrets set "App:ConnectionString" "Data Source=DESKTOP-SGIU0K8;Initial Catalog=PessoasDatabase;Integrated Security=True "
 -	No caso esse comando irá ter a sua conectionString dentro dela com o nome do banco de dados que você irá definir conforme explicado na seção 3 Configuração do Banco de dados. 
 -	Comando para listar as chaves guardadas, caso queira ver se chave foi registrada.
-######dotnet user-secrets list
+###### dotnet user-secrets list
 -	Deletar uma chave caso precise.
-######dotnet user-secrets remove "App:ConnectionString"
-##3.	Configuração do Banco de dados
+###### dotnet user-secrets remove "App:ConnectionString"
+## 3.	Configuração do Banco de dados
 Agora vamos para parte de configuração do banco de dados, para isso acesse o menu superior do Visual Studio em Exibir > SQL Serve Object Explore (Clique nessa opção). Irá aparece uma janela igual a essa da Figura 8, acesse o seu banco de dados SQL serve em Database, clique com o botão direito do mouse, e clique na opção Add new Database, Escreva um nome para o banco de dados e depois atualize seu arquivo appsettings.json  na StringConnection no campo Catalog com o nome que você escolheu para o banco de dados.
 
 Figura 8
